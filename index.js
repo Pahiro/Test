@@ -1,9 +1,12 @@
-// this is Tertius' comment
 express = require('express');
 app = express();
 
-// this is Bennet's comment
-// Bennet's second comment
+app.set('view engine', 'ejs');
+
 app.get('/', function(req, res) {
-  res.send('Hello World!');
+  res.render('index', {name: 'Bennet'});
+});
+
+app.listen(3000, function() {
+  console.log('App listening on port 3000');
 });
