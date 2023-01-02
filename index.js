@@ -1,17 +1,18 @@
-express = require('express');
-app = express();
+const express = require('express');
+const app = express();
 
 app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/', function(req, res) {
-  res.render('index', {name: 'Bennet'});
+app.get('/', (req, res) => {
+  res.render('count');
 });
 
-app.get('/tertius', (req, res) => {
-  res.render('tertius', {name: 'All', year: '2023' });
+app.post('/count', (req, res) => {
+  const name = req.body.name;
+  const letterCount = name.length;
+  res.send(`Your name has ${letterCount} letters.`);
 });
 
-
-app.listen(3000, function() {
-  console.log('App listening on port 3000');
-});
+const port = 3000;
+app.listen(port, () => console.log(`Listening on port ${port}`));
