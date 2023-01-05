@@ -1,17 +1,25 @@
 const express = require('express');
 const app = express();
+const mariadb = require('mariadb');
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.render('count');
+const pool = mariadb.createPool({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'toor',
+  database : 'testdb',
 });
 
-app.post('/count', (req, res) => {
-  const name = req.body.name;
-  const letterCount = name.length;
-  res.send(`Your name has ${letterCount} letters.`);
+app.get('/', (req, res) => {
+  console.log('SQL query');
+
+  pool.query('SELECT * FROM test_tbl')
+  .then(results => {
+    res.render('index', { value: results[0].value })
+  })
+  .catch(error => console.log(error));
 });
 
 const port = 3000;
