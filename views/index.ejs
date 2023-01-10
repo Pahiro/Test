@@ -1,11 +1,23 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Index</title>
-</head>
-<body> 
-  <div>
-    <%= value %>      
-    </body>
-  </div>
-</body>
+  <head>
+    <title>Customers</title>
+  </head>
+  <body>
+    <h1>Table</h1>
+    <table>
+      <tr>
+        <th>line1 - Key</th>
+        <th>line2 - Name</th>
+        <th>line3 - Surname</th>
+      </tr>
+      <% table.forEach(test => { %>
+      <tr>
+        <td><%= test.line1 %></td>
+        <td><%= test.line2 %></td>
+        <td><%= test.line3 %></td>
+      </tr>
+      <% }); %>
+    </table>
+  </body>
 </html>
