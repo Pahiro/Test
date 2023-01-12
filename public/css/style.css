@@ -1,0 +1,11 @@
+body {
+    background-color:  #2B2B2B;
+}
+div {
+    margin: auto;
+    background-color:#423F3E;
+    color: aliceblue;
+    font-family: 'Courier New', Courier, monospace;
+    width: 40%;
+    padding: 10px;
+}
