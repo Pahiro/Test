@@ -1,6 +1,7 @@
 const mariadb = require('mariadb');
 const ejs = require('ejs');
 const express = require('express');
+const bodyParser = require('body-parser')
 
 const app = express();
 const dotenv = require('dotenv');
@@ -10,6 +11,7 @@ dotenv.config();
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // Connect to the MariaDB database
 const pool = mariadb.createPool({
@@ -28,8 +30,13 @@ app.get('/', (req, res) => {
   });
 
   // Render the EJS template and pass the table data
-  
 });
+
+app.post('/post', urlencodedParser, (req, res) => {
+  const search = req.body.search;
+  res.send(`You've submitted the form! ${search}`);
+});
+
 
 const port = 3000;
 app.listen(port, () => {
