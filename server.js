@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 
 const app = express();
 const dotenv = require('dotenv');
+var results = []
 
 dotenv.config();
 
@@ -21,22 +22,30 @@ const pool = mariadb.createPool({
   database: process.env.dbName,
 });
 
-app.get('/', (req, res) => {
-  // Query the "table" table
-  pool.query('SELECT * FROM mytable WHERE line1 = 1').then( rows => {
-    res.render('index', { table: rows });
-  }).catch( err => {
+app.get('/', (request, response) => {
+  response.render('index', { table: results });
+});
+
+app.post('/query', urlencodedParser, (request, response) => {
+  var sql_var = request.body.inputbox;
+  pool.query('SELECT * FROM mytable where line1 = ' + sql_var).then(rows => {
+    results = rows;
+    response.redirect('/');
+  }).catch(err => {
     console.log(err);
   });
 
-  // Render the EJS template and pass the table data
+app.post('/upload', urlencodedParser, (request, response) => {
+    var var_name = request.body.name;
+    var var_surname = request.body.surname;
+    pool.query('INSERT INTO mytable (line2, line3) VALUES (' + var_name + ', ' + var_surname + ')').then(rows => {
+      results = rows;
+      response.redirect('/');
+    }).catch(err => { 
+      console.log(err);
+    });
+  });
 });
-
-app.post('/post', urlencodedParser, (req, res) => {
-  const search = req.body.search;
-  res.send(`You've submitted the form! ${search}`);
-});
-
 
 const port = 3000;
 app.listen(port, () => {
