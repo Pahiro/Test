@@ -6,13 +6,13 @@
   </head>
   <body>
     <div>
-      <form method="POST" action="/query">
-        <input type="text" id="inputbox" placeholder="Search..">
+      <form method="POST" action="/submit?action=search">
+        <input type="text" id="inputbox" name="inputbox" placeholder="Search..">
         <button type="submit">Search</button>
       </form>
-      <form method="POST" action="/upload">
-        <input type="text" id="name" placeholder="Name..">
-        <input type="text" id="surname" placeholder="Surname..">
+      <form method="POST" action="/submit?action=upload">
+        <input type="text" id="name" name="name" placeholder="Name..">
+        <input type="text" id="surname" name="surname" placeholder="Surname..">
         <button type="submit">Upload</button>
       </form>
     </div>
